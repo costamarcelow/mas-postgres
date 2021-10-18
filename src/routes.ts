@@ -1,20 +1,20 @@
 import { request, response, Router } from "express";
+import {UserController} from './controller/UserController';
+
+interface UserRequest {
+    name:string;
+    email:string;
+    password:string;
+}
+
+const userController = new UserController()
 
 const routes = Router();
 
-routes.get('/user', (request, response) => {
-    const teste = request.params;
+routes.post('/user', userController.create);
+routes.post('/activy', () => console.log('Activy route'));
+routes.post('/courseunit', () => console.log('Course Unit route'));
 
-    return response.json({
-        const: teste
-    })
-})
-routes.get('/query', (request, response) => {
-    const consulta  = request.query;
 
-    return response.json({
-        const: consulta
-    })
-})
 export default routes;
 
