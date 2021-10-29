@@ -8,21 +8,31 @@ import {
 import { v4 as uuid } from 'uuid'
 import { Activy } from './Activy'
 
+@Entity("course_units")
 class CourseUnit {
+
+  constructor() {
+    if (!this.id) {
+      this.id = uuid()
+    }
+
+  }
+
   @PrimaryColumn()
   readonly id: string
 
-  @Column()
-  name: string
-
-  @Column()
-  description: string
-
-  @Column()
-  created_at: string
-
   @OneToMany(() => Activy, activy => activy.course_unit)
   activies: Activy[]
+
+  @Column()
+  name: string;
+
+  @Column()
+  description: string;
+
+  @CreateDateColumn()
+  create_at: Date;
+
 }
 
 export { CourseUnit }

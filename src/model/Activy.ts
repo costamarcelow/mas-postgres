@@ -11,7 +11,7 @@ import { CourseUnit } from './CourseUnit'
 
 @Entity('activies')
 class Activy {
-  contructor() {
+  constructor() {
     if (!this.id) {
       this.id = uuid()
     }
@@ -19,6 +19,10 @@ class Activy {
 
   @PrimaryColumn()
   readonly id: string
+
+  @ManyToOne(() => CourseUnit, course_unit => course_unit.activies)
+  @JoinTable()
+  course_unit: CourseUnit
 
   @Column()
   name: string
@@ -34,10 +38,6 @@ class Activy {
 
   @Column()
   created_at: Date
-
-  @ManyToOne(() => CourseUnit, course_unit => course_unit.activies)
-  @JoinTable()
-  course_unit: CourseUnit
 }
 
 export { Activy }

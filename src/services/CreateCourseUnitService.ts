@@ -7,17 +7,26 @@ interface CourseUnitData {
 }
 
 class CreateCourseUnitService {
-  async execute({ name, description }: CourseUnitData) {
-    const courseRepository = getRepository(CourseUnit)
+  public async execute(data: CourseUnitData) {
+    const { name, description } = data
 
-    const course_unit_id = courseRepository.create({
+    const courseUnitRepository = getRepository(CourseUnit)
+
+    const checkUserExists = await courseUnitRepository.findOne({ name })
+
+    if (checkUserExists) {
+      return {
+        Error: 'Course Unit already exist'
+      }
+    }
+    const courseUnit = courseUnitRepository.create({
       name,
       description
     })
 
-    await courseRepository.save(course_unit_id)
+    await courseUnitRepository.save(courseUnit)
 
-    return course_unit_id
+    return courseUnit
   }
 }
 
